@@ -1,0 +1,90 @@
+# Keep a fork of the client repo rebased on its upstream, with Claude resolving
+# the conflicts a plain rebase would stop on. See README.md, "Staying in sync
+# with upstream".
+#
+# What it does: fetch the upstream branch, `git rebase` this repository's
+# branch onto it, and force-push the result back (lease-guarded, so a commit
+# that landed here during the run is never overwritten). A rebase that stops on
+# a conflict hands the conflicted files to the Claude Code CLI, which edits
+# them in place; the driver checks no markers remain, continues the rebase,
+# and repeats per conflicted commit. If a conflict cannot be resolved the
+# rebase is aborted, nothing is pushed and the job fails.
+#
+# Configure in the fork:
+#   secrets.ANTHROPIC_API_KEY  needed only when a conflict actually occurs
+#   vars.UPSTREAM_REPO         owner/repo to rebase onto; default Metta-AI/caos-session
+#   vars.UPSTREAM_BRANCH       its branch; default main
+#
+# In the upstream repository itself the job skips: there is nothing to rebase
+# onto. A fork's branch must not be protected against force-pushes from
+# GITHUB_TOKEN, or the push step fails.
+name: Sync with upstream
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      upstream:
+        description: "owner/repo to rebase onto (default: UPSTREAM_REPO variable, else Metta-AI/caos-session)"
+        required: false
+        type: string
+      branch:
+        description: "upstream branch (default: UPSTREAM_BRANCH variable, else main)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+# One sync at a time: two rebases of the same branch would race on the push.
+concurrency:
+  group: sync-upstream-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      UPSTREAM_REPO: ${{ inputs.upstream || vars.UPSTREAM_REPO || 'Metta-AI/caos-session' }}
+      UPSTREAM_BRANCH: ${{ inputs.branch || vars.UPSTREAM_BRANCH || 'main' }}
+    steps:
+      - name: Skip when this repository is the upstream
+        id: guard
+        run: |
+          if [ "${GITHUB_REPOSITORY,,}" = "${UPSTREAM_REPO,,}" ]; then
+            echo "this is $UPSTREAM_REPO itself; nothing to rebase onto"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.skip != 'true'
+        with:
+          # The branch the run is for: the default branch on a schedule, the
+          # chosen one on a manual dispatch. Full history, so the rebase has
+          # the merge base.
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        if: steps.guard.outputs.skip != 'true'
+        with:
+          node-version: 20
+
+      - name: Install the Claude Code CLI
+        if: steps.guard.outputs.skip != 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Rebase onto upstream
+        id: rebase
+        if: steps.guard.outputs.skip != 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          bash .github/sync-upstream/rebase.sh "https://github.com/$UPSTREAM_REPO.git" "$UPSTREAM_BRANCH"
+
+      - name: Push the rebased branch
+        if: steps.guard.outputs.skip != 'true' && steps.rebase.outputs.changed == 'true'
+        run: git push --force-with-lease origin "HEAD:${{ github.ref_name }}"
