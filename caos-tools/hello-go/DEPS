@@ -1,0 +1,5 @@
+# hello-go's dependency (format `<path> <name>`, path relative to this dir):
+# caos' std/go worker image, reached through the caos-std/ mount the root
+# .caos-expr provides. deep-deps turns this line into DEEP-DEPS/go, which the
+# sibling .caos-expr names as its --base.
+../../caos-std/go go
