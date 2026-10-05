@@ -96,6 +96,12 @@ ones you will want:
   no response came back, and a write may still have arrived, so read the
   state with a GET before resending.
 
+**This repo's own tools**, under `caos-tools/` at the conversation root, run
+the same way by path. `caos-tools/hello-go` is a smoke test and the template
+for adding more (README.md, "Your own tools"):
+`run_tool(path="caos-tools/hello-go", arguments={"name": "caos"})` prints
+`Hello, caos!`.
+
 The imported repo may define its own build and test tools under
 `caos-tools/`; run them the same way, by their path inside the source tree.
 
@@ -114,7 +120,7 @@ Only things an error message does not teach:
 | file | what it decides |
 |---|---|
 | `flake.nix` + `flake.lock` | which caos — the client binary, the tools, the tree |
-| `.caos-expr` | mounts caos' `std/` at `caos-std/` in the evaluated tree |
+| `.caos-expr` | mounts caos' `std/` at `caos-std/` in the evaluated tree, then resolves this repo's `DEPS` files so `caos-tools/` can name std images |
 
 Secrets, such as a GitHub token, are not configured here. They live in the
 user's secret store on the caos server, and the session presents the key named
@@ -122,15 +128,15 @@ by the environment's `--secret-readers`. With caos pinned at `1eb6241c` or
 later, the first prompt's `secret readers:` line (and `caos_status`) shows
 which key that is, or that there is none.
 
-To move to a newer caos: `nix flake update caos`, then set the two `rev=`
-values in `.caos-expr` to the new commit. They must agree with `flake.lock` —
-`std/flake-input-loader` refuses the evaluation otherwise and names both
-revisions, so this cannot go wrong quietly. Pin only a commit that already has
-a published build: the client comes from that commit's release and the tools
-resolve through the same rev, so a commit without one is refused rather than
-paired with an older client. The environment then needs its setup script changed
-before a session installs the new pin; until it is, every call is blocked with
-`STALE INSTALL`.
+To move to a newer caos: `nix flake update caos`, then set every `rev=` in
+`.caos-expr` (three: loader, std tree, deep-deps) to the new commit. They must
+agree with `flake.lock` — `std/flake-input-loader` refuses the evaluation
+otherwise and names both revisions, so this cannot go wrong quietly. Pin only
+a commit that already has a published build: the client comes from that
+commit's release and the tools resolve through the same rev, so a commit
+without one is refused rather than paired with an older client. The
+environment then needs its setup script changed before a session installs the
+new pin; until it is, every call is blocked with `STALE INSTALL`.
 
 Fork this repository to add your own tools, instructions or pins. Nothing here
 is specific to one project.
