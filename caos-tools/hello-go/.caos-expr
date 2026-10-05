@@ -1,0 +1,23 @@
+# caos-tools/hello-go: the smallest tool a client repo can carry, and the
+# pattern for any other Go tool added here. One Go file curried onto caos'
+# std/go worker image, which `go run`s it inside a module that provides
+# `caos/w` (see worker.go).
+#
+# `--base:@=DEEP-DEPS/go` names the image by a LOCAL deep-deps mount, declared
+# in the sibling DEPS as `../../caos-std/go`. An expression is evaluated
+# against its own directory and cannot climb out of it (`../../caos-std/go`
+# here fails with "base path not found in tree"), so the dependency has to be
+# mounted INTO this directory first — which is what the root .caos-expr's
+# deep-deps line does, over the tree with caos-std/ already spliced in.
+# Nothing of caos is copied here.
+#
+# A reader with no `@in`: its ArgTree is its arguments and nothing else, so
+# `@call` adds the tool call's id to make each call its own run instead of a
+# cache hit on the first one.
+HELP=<<END
+Say hello. A smoke test that this client repo's own caos-tools/ build and run:
+run_tool(path="caos-tools/hello-go", arguments={"name": "caos"}).
+@param [name] Who to greet; defaults to "world".
+@call
+END
+curry --base:@=DEEP-DEPS/go --worker1:@=worker.go --help=$HELP
