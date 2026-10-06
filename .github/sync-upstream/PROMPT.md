@@ -36,3 +36,9 @@ that are not conflicted, and do not run anything but the read-only git
 commands named above. If a file cannot be merged faithfully, leave its markers
 in place and explain why in your final message; the driver will abort the
 rebase rather than push a guess.
+
+Rules for this fork:
+
+- `FORK.md` belongs to the fork alone; keep our version of it whole.
+- Keep the fork's "Fork-specific instructions" section at the end of
+  `AGENTS.md` intact, after everything upstream added.
