@@ -39,7 +39,9 @@ rebase rather than push a guess.
 
 Rules for this fork:
 
-- `FORK.md` belongs to the fork alone; keep our version of it whole.
+- `FORK.md` and `.claude/session-start.md` belong to the fork alone; keep our
+  versions whole. If upstream adds a `.claude/settings.json`, merge the two:
+  keep every hook from both sides.
 - Keep the fork's quoted "This fork (daveey/caos-session)" block directly under
   `AGENTS.md`'s first heading, word for word, whatever upstream does to the
   rest of the file. If upstream renames that heading, keep the block under the
