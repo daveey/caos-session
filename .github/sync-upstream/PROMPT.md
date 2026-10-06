@@ -40,5 +40,7 @@ rebase rather than push a guess.
 Rules for this fork:
 
 - `FORK.md` belongs to the fork alone; keep our version of it whole.
-- Keep the fork's "Fork-specific instructions" section at the end of
-  `AGENTS.md` intact, after everything upstream added.
+- Keep the fork's quoted "This fork (daveey/caos-session)" block directly under
+  `AGENTS.md`'s first heading, word for word, whatever upstream does to the
+  rest of the file. If upstream renames that heading, keep the block under the
+  new one.
