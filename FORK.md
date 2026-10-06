@@ -34,6 +34,21 @@ lost if it ends early. The push is fast-forward only. If it is rejected because
 another session published first, `import_source` the repo again into a fresh
 path, `merge` your commit into it, and publish that. Never pass `force`.
 
+## Past sessions
+
+Every caos session is recorded on the server; nothing needs storing here. To
+find and read them (a session's id is `cc/<uuid>`; your own is in `caos_status`):
+
+- `run_tool(path="caos-std/caos-conversation-list", arguments={"limit": "20"})`
+  lists conversations newest first: time, id, tip hash, title. `filter=<text>`
+  narrows by id or title. It lists every user's sessions on this server, not
+  only the user's.
+- `run_tool(path="caos-std/caos-conversation", arguments={"hash": "<tip hash>"})`
+  reads one by the tip hash the list prints; `call=<toolu_id>` shows one call in
+  full. Only prompts, caos tool calls and each turn's final reply are recorded.
+
+When a memory comes from a past session, cite its id in the memory.
+
 ## Tools
 
 This fork's own tools are under `caos-tools/` (see `AGENTS.md`, "This repo's
