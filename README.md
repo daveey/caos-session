@@ -82,6 +82,7 @@ flake.nix / flake.lock   the pin: which caos, by commit
 .caos-expr               mounts caos' std/ at caos-std/ (evaluated only, never on disk),
                          then resolves this repo's own DEPS files
 AGENTS.md                what the agent is told at the start of every session
+FORK.md                  this fork's additions: memory (daveey/caos-memory) and tools
 .gitignore               /caos-std/, which must not exist as a real directory
 caos-tools/              this repo's own tools; hello-go is the worked example
 .github/                 the upstream-sync workflow (below)
