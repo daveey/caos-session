@@ -1,5 +1,12 @@
 # Working in this session
 
+> **This fork (daveey/caos-session) — do this first, every session, before
+> answering anything:** load long-term memory with
+> `import_source(source="https://github.com/daveey/caos-memory.git", into="memory")`,
+> then `read(file-path="memory/MEMORY.md")`. Questions like "what do you
+> remember" are answered from it. Then read `FORK.md` for how to save memories
+> and for this fork's tools.
+
 This repository is not the code you are here to change. It is the **client
 repo**: a handful of text files that say which caos this session uses and
 which tools it offers. The code you work on is **imported into the
@@ -140,8 +147,3 @@ new pin; until it is, every call is blocked with `STALE INSTALL`.
 
 Fork this repository to add your own tools, instructions or pins. Nothing here
 is specific to one project.
-
-## Fork-specific instructions
-
-This is a fork. Read `FORK.md` at the conversation root before your first other
-tool call; it adds memory and tools on top of everything here.
