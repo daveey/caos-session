@@ -140,3 +140,8 @@ new pin; until it is, every call is blocked with `STALE INSTALL`.
 
 Fork this repository to add your own tools, instructions or pins. Nothing here
 is specific to one project.
+
+## Fork-specific instructions
+
+This is a fork. Read `FORK.md` at the conversation root before your first other
+tool call; it adds memory and tools on top of everything here.
