@@ -39,7 +39,8 @@ rebase rather than push a guess.
 
 Rules for this fork:
 
-- `FORK.md` and `.claude/session-start.md` belong to the fork alone; keep our
+- `FORK.md`, `.claude/session-start.md` and `.claude/session-start.sh` belong
+  to the fork alone; keep our
   versions whole. If upstream adds a `.claude/settings.json`, merge the two:
   keep every hook from both sides.
 - Keep the fork's quoted "This fork (daveey/caos-session)" block directly under
