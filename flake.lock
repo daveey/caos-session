@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1794276973,
-        "narHash": "sha256-WgPykz90z0oxXvKYt9dm0jfs0skT3Tj+kAfDS6OQEGk=",
+        "lastModified": 1794426557,
+        "narHash": "sha256-vF2ZGBmXxLhXfW3W4jMWSUFPxDY0oNGyDEeclSTTwkI=",
         "owner": "Metta-AI",
         "repo": "caos",
-        "rev": "a73155a7bf1b0afc7ed057ef6f277d00962c21db",
+        "rev": "81952ca794ca5fc18383827d16c26ddc9192d41d",
         "type": "github"
       },
       "original": {
