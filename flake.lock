@@ -12,13 +12,13 @@
       "locked": {
         "lastModified": 1794526689,
         "narHash": "sha256-MLtq2mxUewXkpTQu2cmFUBOPzpEGZsHXGMER2jO08Z0=",
-        "owner": "Metta-AI",
+        "owner": "softmax-universe",
         "repo": "caos",
         "rev": "bef8c4b7bbc05b97c6637ff42b330050fbcb942a",
         "type": "github"
       },
       "original": {
-        "owner": "Metta-AI",
+        "owner": "softmax-universe",
         "ref": "main",
         "repo": "caos",
         "type": "github"

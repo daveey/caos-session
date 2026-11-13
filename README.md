@@ -21,7 +21,7 @@ cloud environment at it:
 
   ```
   echo last modified 2026-10-05
-  B=https://raw.githubusercontent.com/Metta-AI/caos/main
+  B=https://raw.githubusercontent.com/softmax-universe/caos/main
   curl -fsSL "$B/integrations/claude-code/cloud/bootstrap.go" -o /tmp/caos-bootstrap.go
   go run /tmp/caos-bootstrap.go --base="$B" --server=caos://<ticket> --secret-readers=<key>
   ```
