@@ -19,4 +19,4 @@
 #
 # Both revs must equal what flake.lock locks for `--input=caos`. The loader
 # checks exactly that and refuses the evaluation if they differ.
-run --base:@@=github:softmax-universe/caos?rev=2f3de65669b5c8834e4136047b221807a6392027&dir=std/flake-input-loader --in:@=. --expr=$CAOS_EXPR --input=caos --input-tree:@@=github:softmax-universe/caos?rev=2f3de65669b5c8834e4136047b221807a6392027&dir=std --output-path=caos-std
+run --base:@@=github:softmax-universe/caos?rev=7f0efc5b73ce61bf66dff37bb209901a83bc8dec&dir=std/flake-input-loader --in:@=. --expr=$CAOS_EXPR --input=caos --input-tree:@@=github:softmax-universe/caos?rev=7f0efc5b73ce61bf66dff37bb209901a83bc8dec&dir=std --output-path=caos-std

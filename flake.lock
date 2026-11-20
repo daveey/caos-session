@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1794615569,
-        "narHash": "sha256-AXO5o/1VgFuElLESm1YdpLcZiayAoX7+TYrhoMlUurw=",
+        "lastModified": 1795190923,
+        "narHash": "sha256-Qe4MiWEe5VQDQJmsxxixtqIYr0bPKhd7NfmnmpKnfpk=",
         "owner": "softmax-universe",
         "repo": "caos",
-        "rev": "2f3de65669b5c8834e4136047b221807a6392027",
+        "rev": "7f0efc5b73ce61bf66dff37bb209901a83bc8dec",
         "type": "github"
       },
       "original": {
